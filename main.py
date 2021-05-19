@@ -4,6 +4,9 @@
 
 import sys
 import random
+lives = 10
+score = 0
+winStreak = 0
 
 
 twoPennyCoin = 300
@@ -24,13 +27,12 @@ def clear():
   time.sleep(1)
 
 
-def coinFlip():
-  global winStreak
-  global score
-  global lives
-  lives = 10
-  score = 0
-  winStreak = 0
+def flipAgain():
+  coinFlip()
+
+
+
+def coinFlip(lives, winStreak, score):
   heads = False
   tails = False
   hort = input ("Heads or Tails? ")
@@ -49,6 +51,7 @@ def coinFlip():
     score = score + 100
     print("Correct! The result was heads! You have been awarded 100 coins!")
     print("Winstreak: ", winStreak)
+    print("Lives Remaining: ", lives)
   if flipResult == 2 and heads == True:
     time.sleep(3)
     winStreak = winStreak + 0 
@@ -63,6 +66,7 @@ def coinFlip():
     score = score + 100
     print("Correct! The result was heads! You have been awarded 100 coins!")
     print("Winstreak: ", winStreak)
+    print("Lives Remaining: ", lives)
   if flipResult == 2 and tails == True:
     time.sleep(3)
     winStreak = winStreak + 0 
@@ -71,7 +75,13 @@ def coinFlip():
     print("Winstreak: ", winStreak)
     lives = lives - 1
     print("Lives Remaining: ", lives)
-  return lives
+  if lives >= 1:
+    coinFlip(lives, winStreak, score)
+  else:
+    print("You are out of lives")
+
+
+
 
 
 
@@ -138,8 +148,9 @@ def LS():
         loggedin = 1
         time.sleep(1)
         clear()
-        coinFlip()
-
+        coinFlip(lives, winStreak, score)
+      
+        
 
 
 
@@ -183,6 +194,7 @@ def LS():
     loggedin = 0
     guestusername = "Guest" + str(random.randint(0, 999))
     print("Your Username Is " + guestusername)
+    coinFlip()
   else:
     print("Not An Option!")
 LS()
